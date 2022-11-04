@@ -1,5 +1,6 @@
 package com.mkj.gtest.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.mkj.gtest.entity.AppUser;
+import com.mkj.gtest.entity.Post;
 import com.mkj.gtest.entity.Profile;
 import com.mkj.gtest.repository.AppUserRepository;
 
@@ -22,11 +24,11 @@ public class AppUserServiceImpl implements AppUserService{
 	
 	@Override
 	@Transactional
-	public String insertUser(AppUser user) throws Exception {
+	public AppUser insertUser(AppUser user) throws Exception {
 		AppUser savedUser =  userRepository.save(user);  // Note :  save() is already implemented by Spring Data JPA
 		if(savedUser != null)
 		{
-			return "App User Saved "+savedUser.getUserId()+" username :- "+savedUser.getUsername();
+			return savedUser;
 		}
 		else return null;
 	}
@@ -108,6 +110,33 @@ public class AppUserServiceImpl implements AppUserService{
 		return appUser;
 	}
 
+
+
+
+	@Override
+	@Transactional
+	public AppUser addPost(Post post, AppUser appUser) {
+		
+		List<Post> allUserPost = appUser.getAllPosts();
+		
+		if(allUserPost == null)
+		{
+			allUserPost = new ArrayList<>();
+			allUserPost.add(post);
+		}
+		else
+		{
+			allUserPost.add(post);
+		}
+		
+		appUser.setAllPosts(allUserPost);
+		
+		
+		return appUser;
+	}
+
+	
+	
 	
 	
 }//end of class

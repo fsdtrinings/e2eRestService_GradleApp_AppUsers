@@ -1,0 +1,39 @@
+{
+    "userId": 5,
+    "username": "jenny",
+    "password": "jenny123",
+    "role": "user",
+    "userProfile": {
+        "profileId": 6,
+        "fullName": "jenny james",
+        "city": "New York",
+        "locations": "Amricas",
+        "email": "jenny@gmail.com",
+        "phoneNumber": 8654144815,
+        "companyName": "Working for Bank"
+    },
+    "hobbies": [],
+    "allPosts": [
+        {
+            "postid": 7,
+            "description": "pls buy insurance",
+            "date": "2022-11-04",
+            "likes": 0,
+            "dislikes": 0
+        },
+        {
+            "postid": 8,
+            "description": "pls buy new insurance again",
+            "date": "2022-11-04",
+            "likes": 0,
+            "dislikes": 0
+        },
+        {
+            "postid": 9,
+            "description": "pls buy one more insurance again",
+            "date": "2022-11-04",
+            "likes": 0,
+            "dislikes": 0
+        }
+    ]
+}

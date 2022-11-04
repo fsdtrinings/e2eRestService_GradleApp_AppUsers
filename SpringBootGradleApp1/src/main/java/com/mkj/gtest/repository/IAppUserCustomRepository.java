@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import com.mkj.gtest.entity.AppUser;
 
+@Repository
 public interface IAppUserCustomRepository {
 	
 	public List<AppUser> getAllUsersByRole(String role)throws Exception;

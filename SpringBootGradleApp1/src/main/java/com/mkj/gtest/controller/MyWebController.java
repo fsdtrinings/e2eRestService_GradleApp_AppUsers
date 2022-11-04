@@ -3,6 +3,8 @@ package com.mkj.gtest.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,16 +31,19 @@ public class MyWebController {
 	}
 
 	@PostMapping("/user")
-	public String addUser(@RequestBody AppUser user) 
+	public ResponseEntity<String> addUser(@RequestBody AppUser user) 
 	{
 		/*
 		 * // request body annotation  , help u 
 		 * to take user information as JSON , so it convert JSON object to AppIser Object
 		 * */
 		try {
-			return userService.insertUser(user);
+			AppUser savedUser =  userService.insertUser(user);
+			String responseMsg = savedUser.getUsername()+" save with Id "+savedUser.getUserId();
+			return new ResponseEntity<String>(responseMsg,HttpStatus.OK);
 		} catch (Exception e) {
-			return "Contact to customer care 1800-250-960 or mail us :- care@capg.com";
+			String errorMsg =  "Contact to customer care 1800-250-960 or mail us :- care@capg.com";
+			return new ResponseEntity<String>(errorMsg,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -144,6 +149,8 @@ public class MyWebController {
 		
 		return null;
 	}
+	
+	
 	
 	
 	

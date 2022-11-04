@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -43,6 +44,11 @@ public class AppUser {
 	@ElementCollection
 	@CollectionTable(name = "FBUser_Hobbies")
 	private List<String> hobbies;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "userid")
+	private List<Post> allPosts;
+	
 	
 	
 	public AppUser(String username, String password, String role) {

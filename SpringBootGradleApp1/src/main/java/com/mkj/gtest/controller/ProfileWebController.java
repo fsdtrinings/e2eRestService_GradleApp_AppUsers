@@ -1,16 +1,22 @@
 package com.mkj.gtest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mkj.gtest.dto.ErrorDTO;
+import com.mkj.gtest.dto.MyDTO;
+import com.mkj.gtest.dto.UserDefaultResponseDTO;
 import com.mkj.gtest.entity.AppUser;
 import com.mkj.gtest.entity.Profile;
 import com.mkj.gtest.service.AppUserService;
 import com.mkj.gtest.service.ProfileService;
+import com.mkj.gtest.util.UserDTOConvertor;
 
 @RestController
 @RequestMapping("fb/profile")
@@ -22,8 +28,11 @@ public class ProfileWebController {
 	@Autowired
 	AppUserService userService;
 	
+	@Autowired
+	UserDTOConvertor dtoConvertor;
+	
 	@PostMapping("/add")  // ....../fbusers/profile/add?username=mike
-	public AppUser doProfileThings(@RequestBody Profile profile,@RequestParam String username)
+	public ResponseEntity<MyDTO> doProfileThings(@RequestBody Profile profile,@RequestParam String username)
 	{
 		AppUser alreadySavedUser = null;
 		try
@@ -36,7 +45,9 @@ public class ProfileWebController {
 				{
 					AppUser profileAddUser = userService.linkProfile(savedProfile, alreadySavedUser);
 					
-					return profileAddUser;
+					UserDefaultResponseDTO dtoResponse = dtoConvertor.getUserDefaultDTO(profileAddUser);
+					
+					return new ResponseEntity<>(dtoResponse, HttpStatus.OK);
 				}
 				else
 				{
@@ -47,10 +58,11 @@ public class ProfileWebController {
 		}
 		catch (Exception e) {
 			System.out.println(e);
-			return alreadySavedUser;
+			ErrorDTO errorDTo = new ErrorDTO(e.getMessage());
+			return new ResponseEntity<>(errorDTo, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return alreadySavedUser;
+		return null;
 		
 		// code to add the profile
 	}
