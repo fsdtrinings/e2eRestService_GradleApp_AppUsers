@@ -17,6 +17,8 @@ public interface AppUserService {
 	public AppUser getUserByUserNameAndRole(String username,String role)throws Exception;
 	public List<AppUser> getUsersByRole(String role)throws Exception;
 	public List<AppUser> getUsersBetweenIds(int range1,int range2)throws Exception;
+	public AppUser getUserById(int searchedUserId)throws Exception;
+	
 	
 	public AppUser insertUser(AppUser user)throws Exception;
 	public AppUser addHobbies(List<String> allHobbies,AppUser appUser);

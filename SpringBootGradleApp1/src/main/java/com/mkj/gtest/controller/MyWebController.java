@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mkj.gtest.dto.MyDTO;
+import com.mkj.gtest.dto.UserDefaultResponseDTO;
 import com.mkj.gtest.entity.AppUser;
 import com.mkj.gtest.service.AppUserService;
+import com.mkj.gtest.util.UserDTOConvertor;
 
 @RestController
 @RequestMapping("/facebook")
@@ -151,7 +154,17 @@ public class MyWebController {
 	}
 	
 	
-	
+	@GetMapping("/user/id/{id}")
+	public ResponseEntity<MyDTO> getUserByUserId(@PathVariable int id)throws Exception
+	{
+		
+			AppUser user = userService.getUserById(id);
+			
+			UserDefaultResponseDTO dtoResp = UserDTOConvertor.getUserDefaultDTO(user);
+			
+			return new ResponseEntity<MyDTO>(dtoResp, HttpStatus.OK);
+		
+	}
 	
 	
 }

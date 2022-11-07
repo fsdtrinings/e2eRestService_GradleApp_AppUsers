@@ -1,8 +1,10 @@
 package com.mkj.gtest.service;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,16 @@ public class AppUserServiceImpl implements AppUserService{
 	
 	
 	
+
+	@Override
+	public AppUser getUserById(int searchedUserId) throws Exception {
+		
+	 AppUser outputUser = userRepository.getReferenceById(searchedUserId);
+	 return outputUser;
+	}
+
+
+
 
 	@Override
 	public List<AppUser> getUsersBetweenIds(int range1, int range2) throws Exception {
@@ -72,7 +84,18 @@ public class AppUserServiceImpl implements AppUserService{
 	@Override
 	public AppUser getUserByUserName(String username) throws Exception {
 		
-		return userRepository.getUsersByUsername(username);
+		AppUser outputUser =  userRepository.getUsersByUsername(username);
+		
+		if(outputUser == null)
+		{
+			throw new EntityNotFoundException(username+" not listed in the database");
+		}
+		else
+		{
+			return outputUser;
+		}
+		
+		
 	}
 	
 	@Override
