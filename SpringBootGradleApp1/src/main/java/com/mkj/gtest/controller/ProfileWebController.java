@@ -2,6 +2,8 @@ package com.mkj.gtest.controller;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,12 +37,17 @@ public class ProfileWebController {
 	@Autowired
 	UserDTOConvertor dtoConvertor;
 	
+	private final Logger mylogs = LoggerFactory.getLogger(this.getClass());
+	
+	
 	@PostMapping("/add")  // ....../fbusers/profile/add?username=mike
 	public ResponseEntity<MyDTO> doProfileThings(@RequestBody @Valid Profile profile,@RequestParam String username)
 	{
 		AppUser alreadySavedUser = null;
 		try
 		{
+			System.out.println(" --- > "+mylogs);
+			mylogs.info("---->>>Inside try of doprofile things");
 			Profile savedProfile = profileService.addProfile(profile);
 			if(savedProfile.getProfileId() != 0)
 			{
@@ -55,6 +62,7 @@ public class ProfileWebController {
 				}
 				else
 				{
+					mylogs.error("User not found in post mapping uri : add");
 					throw new Exception("User not found ,  "+alreadySavedUser+" for "+username);
 				}
 				

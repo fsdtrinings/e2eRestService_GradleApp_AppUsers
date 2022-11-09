@@ -38,7 +38,7 @@ public class Profile {
 	@Email(message = "Not a valid email")
 	private String email;
 	@PositiveOrZero(message = "Invalid Phone Number")
-	@Pattern(regexp = "[0-9]{10}",message = "Phone number is not valid")
+	//@Pattern(regexp = "[0-9]{10}",message = "Phone number is not valid")
 	private long phoneNumber;
 	private String companyName;
 	
