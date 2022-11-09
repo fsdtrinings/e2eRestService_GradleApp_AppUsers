@@ -24,6 +24,7 @@ public class AppUserServiceImpl implements AppUserService{
 	@Autowired
 	AppUserRepository userRepository;
 	
+	
 	@Override
 	@Transactional
 	public AppUser insertUser(AppUser user) throws Exception {
@@ -37,6 +38,15 @@ public class AppUserServiceImpl implements AppUserService{
 	
 	
 	
+
+	@Override
+	public List<Post> getAllPosts(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 
 	@Override
 	public AppUser getUserById(int searchedUserId) throws Exception {
@@ -158,7 +168,9 @@ public class AppUserServiceImpl implements AppUserService{
 		return appUser;
 	}
 
-	
+
+
+
 	
 	
 	

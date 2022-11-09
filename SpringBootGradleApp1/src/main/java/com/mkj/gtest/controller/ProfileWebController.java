@@ -1,8 +1,11 @@
 package com.mkj.gtest.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +23,7 @@ import com.mkj.gtest.util.UserDTOConvertor;
 
 @RestController
 @RequestMapping("fb/profile")
+@Validated
 public class ProfileWebController {
 
 	@Autowired
@@ -32,7 +36,7 @@ public class ProfileWebController {
 	UserDTOConvertor dtoConvertor;
 	
 	@PostMapping("/add")  // ....../fbusers/profile/add?username=mike
-	public ResponseEntity<MyDTO> doProfileThings(@RequestBody Profile profile,@RequestParam String username)
+	public ResponseEntity<MyDTO> doProfileThings(@RequestBody @Valid Profile profile,@RequestParam String username)
 	{
 		AppUser alreadySavedUser = null;
 		try

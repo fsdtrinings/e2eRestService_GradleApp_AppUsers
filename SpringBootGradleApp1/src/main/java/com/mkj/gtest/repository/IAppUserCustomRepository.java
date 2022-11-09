@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.mkj.gtest.entity.AppUser;
+import com.mkj.gtest.entity.Post;
 
 @Repository
 public interface IAppUserCustomRepository {
@@ -16,6 +17,8 @@ public interface IAppUserCustomRepository {
 	
 	@Query("from AppUser where userId >= :range1 and userId <= :range2")
 	public List<AppUser> getUsersBetweenIds(@Param("range1") int range1,@Param("range2") int range2)throws Exception;
+	
+	
 }
 
 
