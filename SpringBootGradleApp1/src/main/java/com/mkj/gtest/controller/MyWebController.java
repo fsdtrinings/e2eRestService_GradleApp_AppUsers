@@ -2,6 +2,8 @@ package com.mkj.gtest.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +29,7 @@ public class MyWebController {
 	@Autowired
 	AppUserService userService;
 	
-	
+	private final Logger mylogs = LoggerFactory.getLogger(this.getClass());
 	
 	public MyWebController() {
 		System.out.println("\n\n\n====>> Inside Constructor "+this);
@@ -43,9 +45,13 @@ public class MyWebController {
 		try {
 			AppUser savedUser =  userService.insertUser(user);
 			String responseMsg = savedUser.getUsername()+" save with Id "+savedUser.getUserId();
+			
+			
+			mylogs.info(" ---->> Inside App User Constroller Post mapping , user created "+responseMsg);
 			return new ResponseEntity<String>(responseMsg,HttpStatus.OK);
 		} catch (Exception e) {
 			String errorMsg =  "Contact to customer care 1800-250-960 or mail us :- care@capg.com";
+			mylogs.error(errorMsg);
 			return new ResponseEntity<String>(errorMsg,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -76,7 +82,13 @@ public class MyWebController {
 			return userService.getUsersBetweenIds(r1, r2);
 		}	
 	
-	
+		@GetMapping("/validate/{searchUsername}")
+		public String abc3(@PathVariable String searchUsername)throws Exception
+		{
+			AppUser user =  userService.getUserByUserName(searchUsername);
+			if(user != null) return user.getUsername();
+			else return null;
+		}
 	
 	
 	// http://localhost:8001/facebook/userandrole/ramesh
